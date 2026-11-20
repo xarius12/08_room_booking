@@ -1,0 +1,39 @@
+name: Run pytest
+
+# Advanced feature: reduce unnecessary test runs.
+# - Pushes to feature branches do not start a run (only pushes to main do).
+# - Tests run when a Pull Request is created or updated (before merging).
+# - Runs only start when a Python file or this workflow file changes (paths filter),
+#   so changes to README, docs or other non-code files do not trigger tests.
+# - workflow_dispatch lets us run the tests manually when needed.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.py"
+      - ".github/workflows/run-pytest.yml"
+  pull_request:
+    paths:
+      - "**.py"
+      - ".github/workflows/run-pytest.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pytest
+        run: pip install pytest
+
+      - name: Run pytest
+        run: python -m pytest
