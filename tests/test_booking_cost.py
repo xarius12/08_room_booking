@@ -24,7 +24,7 @@ from src.booking_cost import calculate_booking_cost
 )
 def test_valid_stay_returns_nights_times_rate_as_int(nights, nightly_rate_cents, expected):
     # Arrange: nights, nightly_rate_cents and expected come from the parameters
-    # Act
+    # Act jajaj
     result = calculate_booking_cost(nights, nightly_rate_cents)
     # Assert
     assert result == expected
